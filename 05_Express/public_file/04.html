@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PUT Request Example</title>
+</head>
+
+<body>
+    <h1>Update User</h1>
+    <form id="updateUserForm">
+        <label for="userId">User ID:</label>
+        <input type="number" id="userId" required><br><br>
+
+        <label for="userName">Name:</label>
+        <input type="text" id="userName" required><br><br>
+
+        <label for="userAge">Age:</label>
+        <input type="number" id="userAge" required><br><br>
+
+        <button type="submit">Update User</button>
+    </form>
+
+    <script>
+        document.getElementById('updateUserForm').addEventListener('submit', function (e) {
+            e.preventDefault(); // Prevent form submission
+
+            const userId = document.getElementById('userId').value;
+            const userName = document.getElementById('userName').value;
+            const userAge = document.getElementById('userAge').value;
+
+            // Data to send in the PUT request
+            const userData = {
+                name: userName,
+                age: userAge
+            };
+
+            // Sending PUT request to the server
+            fetch(`http://localhost:3000/users/${userId}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(userData) // Send user data as JSON
+            })
+                .then(response => {
+                    // response.ok is a boolean property that is true if the response code is in the 2xx range (i.e., a successful request).
+                    if (!response.ok) {  // If the response is not OK (e.g., 404)
+                        throw new Error('User not found');
+                    }
+                    return response.json();  // If response is OK, parse the JSON
+                })
+                .then(data => {
+                    console.log('User updated:', data);
+                    alert('User updated successfully');
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('Failed to update user');
+                });
+        });
+    </script>
+</body>
+
+</html>

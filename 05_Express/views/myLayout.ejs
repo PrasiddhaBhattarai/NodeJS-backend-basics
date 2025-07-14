@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>
+        <!-- conditional statements -->
+        <!-- checks if title has some value before putting it -->
+        <!-- prevents future error -->
+        <% if (typeof title !=='undefined' ) { %>
+            <%= title %>
+        <% } %>
+    </title>
+</head>
+
+<body>
+    <header>
+        <h1>My Website</h1>
+        <nav><a href="/">Home</a> | <a href="/about">About</a></nav>
+    </header>
+
+    <main>
+        <%- body %> <!-- This is where the content of index.ejs or about.ejs will go -->
+        <!-- Only contains the non-script/style HTML from the view -->
+    </main>
+
+    <footer>
+        <p>&copy; 2025 My Website</p>
+    </footer>
+</body>
+
+<% if (typeof customJS !=='undefined' ) { %>
+    <script src="/js/<%= customJS %>.js"></script>
+<% } %>
+
+
+<!-- below is for app.set("layout extractScripts"true); -->
+<!-- the script tag from rendering file (like login.ejsregister.ejs, etc) is extracted and put in <% -script%in layout file before generating final HTML file to brendered-->
+        <% if (typeof script !=='undefined' ) { %>
+    <%- script %>
+<% } %>
+
+</html>
+
+<!-- above structure of layout is generally used convention -->
+<!-- its not a compulsion, but 
+    <%- body %> should be included.
+->
